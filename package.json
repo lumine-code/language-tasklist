@@ -1,6 +1,6 @@
 {
   "name": "language-tasklist",
-  "description": "Tasklist simple grammar",
+  "description": "Syntax highlighting for tasklist files",
   "repository": "https://github.com/asiloisad/pulsar-language-tasklist",
   "keywords": [
     "tasklist",
