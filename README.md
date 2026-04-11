@@ -10,7 +10,7 @@ Syntax highlighting for tasklist files. Provides grammar for `TODO`, `*.todo`, a
 - **Chapters & headers**: Support for `#` chapters and `:` headers.
 - **Text formatting**: Support for `~text~`, `*text*`, `_text_`, `$text$` and `` `text` ``.
 - **Outline support**: Folding via [navigation-panel](https://github.com/asiloisad/pulsar-navigation-panel).
-- **[tasklist-tools](https://github.com/asiloisad/pulsar-tasklist-tools)**: Commands for task toggling and navigation.
+- **Task commands**: Commands for task toggling and navigation, via [tasklist-tools](https://github.com/asiloisad/pulsar-tasklist-tools).
 
 ## Installation
 
