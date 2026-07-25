@@ -1,7 +1,7 @@
 {
   "name": "language-tasklist",
   "author": "lumine-code",
-  "description": "Syntax highlighting for tasklist files",
+  "description": "Syntax highlighting for tasklist files.",
   "repository": "https://github.com/lumine-code/language-tasklist",
   "bugs": {
     "url": "https://github.com/lumine-code/language-tasklist/issues"

@@ -1,6 +1,8 @@
 # language-tasklist
 
-Syntax highlighting for tasklist files. Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols.
+Syntax highlighting for tasklist files.
+
+Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols.
 
 ## Features
 
