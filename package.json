@@ -7,8 +7,9 @@
     "url": "https://github.com/lumine-code/language-tasklist/issues"
   },
   "keywords": [
-    "tasklist",
-    "language"
+    "todo",
+    "checklist",
+    "gtd"
   ],
   "version": "1.0.0",
   "license": "MIT",
