@@ -1,32 +1,29 @@
 # language-tasklist
 
-Syntax highlighting for tasklist files. Provides grammar for `TODO`, `*.todo`, and `*.tasklist` files with Unicode tick symbols.
-
-![language-tasklist](https://github.com/asiloisad/pulsar-language-tasklist/blob/master/assets/example.png?raw=true)
+Syntax highlighting for tasklist files. Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols.
 
 ## Features
 
-- **Unicode ticks**: Multiple task states using Unicode symbols.
-- **Chapters & headers**: Support for `#` chapters and `:` headers.
-- **Text formatting**: Support for `~text~`, `*text*`, `_text_`, `$text$` and `` `text` ``.
-- **Outline support**: Folding via [navigation-panel](https://github.com/asiloisad/pulsar-navigation-panel).
-- **Task commands**: Commands for task toggling and navigation, via [tasklist-tools](https://github.com/asiloisad/pulsar-tasklist-tools).
+- **Grammars**: provides TextMate grammars.
+- **Unicode ticks**: multiple task states using Unicode symbols.
+- **Chapters & headers**: support for `#` chapters and `:` headers.
+- **Text formatting**: support for `~text~`, `*text*`, `_text_`, `$text$` and `` `text` ``.
 
 ## Installation
 
-To install `language-tasklist` search for [language-tasklist](https://web.pulsar-edit.dev/packages/language-tasklist) in the Install pane of the Pulsar settings or run `ppm install language-tasklist`. Alternatively, you can run `ppm install asiloisad/pulsar-language-tasklist` to install a package directly from the GitHub repository.
+To install `language-tasklist` search for _language-tasklist_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-tasklist`.
 
-## Syntax
+## Usage
 
 A task is a single line consisting of a tick and text. Unicode characters represent ticks:
 
-| Symbol | Code | Name | Description |
-| --- | --- | --- | --- |
-| `▷` | `U+25B7` | `high` | high priority pending task |
-| `☐` | `U+2610` | `todo` | normal priority pending task |
-| `✔` | `U+2714` | `done` | done/completed task |
-| `✘` | `U+2718` | `fail` | failed/rejected task |
-| `•` | `U+2022` | `info` | notes line |
+| Symbol | Code     | Name   | Description                  |
+| ------ | -------- | ------ | ---------------------------- |
+| `▷`    | `U+25B7` | `high` | high priority pending task   |
+| `☐`    | `U+2610` | `todo` | normal priority pending task |
+| `✔`    | `U+2714` | `done` | done/completed task          |
+| `✘`    | `U+2718` | `fail` | failed/rejected task         |
+| `•`    | `U+2022` | `info` | notes line                   |
 
 - Lines starting with `#` are chapters (multilevel supported).
 - Non-tick lines ending with `:` are headers.
@@ -34,37 +31,18 @@ A task is a single line consisting of a tick and text. Unicode characters repres
 
 ## Customization
 
-The style can be adjusted according to user preferences in the `styles.less` file:
+The style can be adjusted in the user's `styles.less` file, e.g. add line-through to done and fail tasks:
 
-- e.g. add line-through to done and fail tasks:
-
-  ```less
-  .syntax--tasklist {
-    &.syntax--done, &.syntax--fail {
-      &.syntax--text {
-        text-decoration: line-through;
-      }
+```less
+.syntax--tasklist {
+  &.syntax--done,
+  &.syntax--fail {
+    &.syntax--text {
+      text-decoration: line-through;
     }
   }
-  ```
-
-- e.g. set bold font-weight of chapters:
-
-  ```less
-  .syntax--tasklist {
-    &.syntax--chapter {
-      font-weight: bold;
-    }
-  }
-  ```
-
-- e.g. change high tasks color:
-
-  ```less
-  .syntax--tasklist.syntax--high.syntax--text {
-    color: red;
-  }
-  ```
+}
+```
 
 ## Contributing
 

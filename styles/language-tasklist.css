@@ -1,0 +1,73 @@
+.syntax--tasklist {
+  &.syntax--chapter {
+    color: var(--syntax-color-tag);
+  }
+
+  &.syntax--header {
+    color: var(--syntax-color-class);
+  }
+
+  &.syntax--format {
+    &.syntax--strike {
+      text-decoration: line-through;
+    }
+
+    &.syntax--bold {
+      font-weight: bold;
+    }
+
+    &.syntax--italic {
+      font-style: italic;
+    }
+
+    &.syntax--math {
+      color: var(--syntax-color-function);
+    }
+
+    &.syntax--raw {
+      color: var(--syntax-color-snippet);
+    }
+  }
+
+  &.syntax--high {
+    &.syntax--tick {
+      color: var(--text-color-info);
+    }
+
+    &.syntax--text {
+      color: var(--text-color-info);
+    }
+  }
+
+  &.syntax--todo {
+    &.syntax--tick {
+      color: var(--text-color-info);
+    }
+  }
+
+  &.syntax--done {
+    &.syntax--tick {
+      color: var(--text-color-success);
+    }
+
+    &.syntax--text {
+      color: var(--text-color-subtle);
+    }
+  }
+
+  &.syntax--fail {
+    &.syntax--tick {
+      color: var(--text-color-error);
+    }
+
+    &.syntax--text {
+      color: var(--text-color-subtle);
+    }
+  }
+
+  &.syntax--info {
+    &.syntax--tick {
+      color: var(--text-color-info);
+    }
+  }
+}

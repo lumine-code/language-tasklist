@@ -1,0 +1,40 @@
+describe("language-tasklist", () => {
+  beforeEach(async () => {
+    await atom.packages.activatePackage("language-tasklist");
+  });
+
+  it("loads the tasklist grammar", () => {
+    const grammar = atom.grammars.grammarForScopeName("text.tasklist");
+    expect(grammar).toBeTruthy();
+    expect(grammar.name).toBe("Tasklist");
+  });
+
+  it("selects the tasklist grammar for .tasklist and .todo files", () => {
+    expect(atom.grammars.selectGrammar("notes.tasklist", "").scopeName).toBe("text.tasklist");
+    expect(atom.grammars.selectGrammar("notes.todo", "").scopeName).toBe("text.tasklist");
+  });
+
+  it("tokenizes task lines by tick state", () => {
+    const grammar = atom.grammars.grammarForScopeName("text.tasklist");
+
+    const done = grammar.tokenizeLine("✔ finished task").tokens;
+    expect(done[0].scopes).toContain("tick.done.task.tasklist");
+
+    const todo = grammar.tokenizeLine("☐ pending task").tokens;
+    expect(todo[0].scopes).toContain("tick.todo.task.tasklist");
+
+    const fail = grammar.tokenizeLine("✘ rejected task").tokens;
+    expect(fail[0].scopes).toContain("tick.fail.task.tasklist");
+  });
+
+  it("tokenizes chapters and headers", () => {
+    const grammar = atom.grammars.grammarForScopeName("text.tasklist");
+
+    const chapter = grammar.tokenizeLine("# Chapter").tokens;
+    expect(chapter[0].scopes).toContain("symbol.chapter.tasklist");
+
+    const header = grammar.tokenizeLine("Header:").tokens;
+    const scopes = header.flatMap((token) => token.scopes);
+    expect(scopes).toContain("symbol.header.tasklist");
+  });
+});
