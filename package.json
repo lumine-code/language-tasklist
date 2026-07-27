@@ -17,7 +17,7 @@
     "atom": ">=1.100.0 <2.0.0"
   },
   "scripts": {
-    "test": "cd ../../lumine && npm run test:only -- ../pkg_lumine/language-tasklist/spec",
+    "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
