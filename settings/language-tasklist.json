@@ -1,6 +1,6 @@
 {
   ".text.tasklist": {
-    "editor": {
+    "language": {
       "tabLength": 2,
       "commentStart": "",
       "increaseIndentPattern": "^.+?: *$"

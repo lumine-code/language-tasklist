@@ -37,4 +37,17 @@ describe("language-tasklist", () => {
     const scopes = header.flatMap((token) => token.scopes);
     expect(scopes).toContain("symbol.header.tasklist");
   });
+
+  // The per-grammar settings live in the `language` namespace; under the
+  // legacy `editor` one nothing reads them.
+  describe("scoped settings", () => {
+    it("indents the tasks under a header", async () => {
+      const editor = await atom.workspace.open("notes.tasklist");
+      expect(editor.getGrammar().scopeName).toBe("text.tasklist");
+
+      editor.setText("Header:\n☐ pending task");
+      editor.autoIndentBufferRows(0, editor.getLineCount() - 1);
+      expect(editor.lineTextForBufferRow(1)).toBe("  ☐ pending task");
+    });
+  });
 });
