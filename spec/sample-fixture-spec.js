@@ -15,15 +15,24 @@ describe("Tasklist sample fixtures", () => {
 
     expect(editor.getGrammar().scopeName).toBe("text.tasklist");
 
-    // Every token carries the root scope, so a sample the grammar matched
-    // nothing in still tokenizes — it just comes back as one flat run of
-    // "text.tasklist" and nothing else. That is what this rules out.
+    // Read the grammar rather than the editor: a TextMate language mode
+    // tokenizes lazily in the background, so scanning rows through the editor
+    // reports whatever happened to be done by then — green on a fast machine
+    // and red on a slow one. `tokenizeLines` is synchronous and complete.
+    const text = require("fs").readFileSync(
+      path.join(__dirname, "fixtures", "sample.tasklist"),
+      "utf8",
+    );
     const scopes = new Set();
-    for (let row = 0; row < editor.getLineCount(); row++) {
-      for (const token of editor.tokensForScreenRow(row)) {
+    for (const tokens of editor.getGrammar().tokenizeLines(text)) {
+      for (const token of tokens) {
         for (const name of token.scopes) scopes.add(name);
       }
     }
+
+    // Every token carries the root scope, so a sample the grammar matched
+    // nothing in still tokenizes — it just comes back as one flat run of
+    // "text.tasklist" and nothing else. That is what this rules out.
     scopes.delete("text.tasklist");
     expect(scopes.size).toBeGreaterThan(0);
   });
