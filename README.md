@@ -6,7 +6,7 @@ Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols
 
 ## Features
 
-- **Grammars**: provides TextMate grammars.
+- **Grammars**: provides TextMate grammars maintained here.
 - **Unicode ticks**: multiple task states using Unicode symbols.
 - **Chapters & headers**: support for `#` chapters and `:` headers.
 - **Text formatting**: support for `~text~`, `*text*`, `_text_`, `$text$` and `` `text` ``.
