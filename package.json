@@ -13,6 +13,13 @@
   ],
   "version": "1.0.0",
   "license": "MIT",
+  "files": [
+    "assets",
+    "grammars",
+    "settings",
+    "spec",
+    "styles"
+  ],
   "engines": {
     "lumine": "^1.0.0"
   },
