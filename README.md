@@ -33,9 +33,9 @@ A task is a single line consisting of a tick and text. Unicode characters repres
 
 ## Customization
 
-The style can be adjusted in the user's `styles.less` file, e.g. add line-through to done and fail tasks:
+The style can be adjusted in the user's `styles.css` file, e.g. add line-through to done and fail tasks:
 
-```less
+```css
 .syntax--tasklist {
   &.syntax--done,
   &.syntax--fail {
