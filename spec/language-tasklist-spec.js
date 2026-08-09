@@ -1,21 +1,21 @@
 describe("language-tasklist", () => {
   beforeEach(async () => {
-    await atom.packages.activatePackage("language-tasklist");
+    await lumine.packages.activatePackage("language-tasklist");
   });
 
   it("loads the tasklist grammar", () => {
-    const grammar = atom.grammars.grammarForScopeName("text.tasklist");
+    const grammar = lumine.grammars.grammarForScopeName("text.tasklist");
     expect(grammar).toBeTruthy();
     expect(grammar.name).toBe("Tasklist");
   });
 
   it("selects the tasklist grammar for .tasklist and .todo files", () => {
-    expect(atom.grammars.selectGrammar("notes.tasklist", "").scopeName).toBe("text.tasklist");
-    expect(atom.grammars.selectGrammar("notes.todo", "").scopeName).toBe("text.tasklist");
+    expect(lumine.grammars.selectGrammar("notes.tasklist", "").scopeName).toBe("text.tasklist");
+    expect(lumine.grammars.selectGrammar("notes.todo", "").scopeName).toBe("text.tasklist");
   });
 
   it("tokenizes task lines by tick state", () => {
-    const grammar = atom.grammars.grammarForScopeName("text.tasklist");
+    const grammar = lumine.grammars.grammarForScopeName("text.tasklist");
 
     const done = grammar.tokenizeLine("✔ finished task").tokens;
     expect(done[0].scopes).toContain("tick.done.task.tasklist");
@@ -28,7 +28,7 @@ describe("language-tasklist", () => {
   });
 
   it("tokenizes chapters and headers", () => {
-    const grammar = atom.grammars.grammarForScopeName("text.tasklist");
+    const grammar = lumine.grammars.grammarForScopeName("text.tasklist");
 
     const chapter = grammar.tokenizeLine("# Chapter").tokens;
     expect(chapter[0].scopes).toContain("symbol.chapter.tasklist");
@@ -42,7 +42,7 @@ describe("language-tasklist", () => {
   // legacy `editor` one nothing reads them.
   describe("scoped settings", () => {
     it("indents the tasks under a header", async () => {
-      const editor = await atom.workspace.open("notes.tasklist");
+      const editor = await lumine.workspace.open("notes.tasklist");
       expect(editor.getGrammar().scopeName).toBe("text.tasklist");
 
       editor.setText("Header:\n☐ pending task");

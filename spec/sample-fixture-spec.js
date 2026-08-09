@@ -7,11 +7,11 @@ const path = require("path");
 
 describe("Tasklist sample fixtures", () => {
   beforeEach(async () => {
-    await atom.packages.activatePackage("language-tasklist");
+    await lumine.packages.activatePackage("language-tasklist");
   });
 
   it("tokenizes sample.tasklist", async () => {
-    const editor = await atom.workspace.open(path.join(__dirname, "fixtures", "sample.tasklist"));
+    const editor = await lumine.workspace.open(path.join(__dirname, "fixtures", "sample.tasklist"));
 
     expect(editor.getGrammar().scopeName).toBe("text.tasklist");
 
