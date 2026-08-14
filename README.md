@@ -13,7 +13,7 @@ Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols
 
 ## Installation
 
-To install `language-tasklist` search for _language-tasklist_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-tasklist`.
+To install `language-tasklist` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-tasklist`.
 
 ## Usage
 
