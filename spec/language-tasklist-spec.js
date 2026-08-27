@@ -38,7 +38,7 @@ describe("language-tasklist", () => {
     expect(scopes).toContain("symbol.header.tasklist");
   });
 
-  // The per-grammar settings live in the `language` namespace; under the
+  // The per-grammar settings live in the `grammar` namespace; under the
   // legacy `editor` one nothing reads them.
   describe("scoped settings", () => {
     it("indents the tasks under a header", async () => {
