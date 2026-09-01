@@ -11,6 +11,7 @@
     "grammar": "tree-sitter-tasklist/tree-sitter-tasklist.wasm",
     "highlightsQuery": "tree-sitter-tasklist/highlights.scm",
     "foldsQuery": "tree-sitter-tasklist/folds.scm",
-    "indentsQuery": "tree-sitter-tasklist/indents.scm"
+    "indentsQuery": "tree-sitter-tasklist/indents.scm",
+    "tagsQuery": "tree-sitter-tasklist/tags.scm"
   }
 }

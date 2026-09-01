@@ -11,6 +11,7 @@ Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols
 - **Chapters and headers**: support for `#` chapters and `:` headers.
 - **Text formatting**: support for `~text~`, `*text*`, `_text_`, `$text$` and `` `text` ``.
 - **Folding**: folds visually indented groups without changing task semantics.
+- **Symbols**: lists chapters and headers by name in symbol navigation.
 - **Annotations**: highlights hyperlinks and TODO annotations in active text.
 
 ## Installation

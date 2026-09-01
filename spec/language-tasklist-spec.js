@@ -213,4 +213,19 @@ describe("language-tasklist", () => {
     editor.foldBufferRow(10);
     expect(foldedBufferRanges()).toEqual([[10, 11]]);
   });
+
+  it("exposes named chapters and headers to symbol consumers", async () => {
+    await setUp("# Chapter name\nHeader name:\n☐ task name\n• note name\n :\n###   \n");
+    const layer = languageMode.rootLanguageLayer;
+    const captures = layer.queries.tagsQuery.captures(layer.tree.rootNode);
+
+    expect(
+      captures
+        .filter((capture) => capture.name === "definition.heading")
+        .map((capture) => capture.node.type),
+    ).toEqual(["chapter", "header"]);
+    expect(
+      captures.filter((capture) => capture.name === "name").map((capture) => capture.node.text),
+    ).toEqual(["Chapter name", "Header name"]);
+  });
 });
