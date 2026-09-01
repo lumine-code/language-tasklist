@@ -217,7 +217,7 @@ describe("language-tasklist", () => {
     expect(foldedBufferRanges()).toEqual([[8, 12]]);
   });
 
-  it("exposes nested chapter and header symbols while excluding tasks", async () => {
+  it("exposes nested chapter and header symbols with distinct icons while excluding tasks", async () => {
     await setUp(
       "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\n☐ task outside\n :\n###   \n",
     );
@@ -232,11 +232,20 @@ describe("language-tasklist", () => {
             name.node.startIndex >= capture.node.startIndex &&
             name.node.endIndex <= capture.node.endIndex,
         ).node.text,
+        icon: capture.setProperties["symbol.icon"],
         start: capture.node.startIndex,
         end: capture.node.endIndex,
         children: [],
       }))
       .sort((left, right) => left.start - right.start || right.end - left.end);
+    expect(entries.map(({ name, icon }) => [name, icon])).toEqual([
+      ["Parent", "book"],
+      ["Header", "bookmark"],
+      ["Child", "bookmark"],
+      ["Sibling", "bookmark"],
+      ["Subchapter", "book"],
+      ["Empty", "book"],
+    ]);
     const roots = [];
     const stack = [];
     for (const entry of entries) {

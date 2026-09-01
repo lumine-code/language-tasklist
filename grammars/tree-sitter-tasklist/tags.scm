@@ -3,6 +3,7 @@
     (chapter
       title: (inline) @name))) @definition.heading
   (#match? @name "\\S")
+  (#set! symbol.icon "book")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
 
 ((document
@@ -10,6 +11,7 @@
     (chapter
       title: (inline) @name) @definition.heading))
   (#match? @name "\\S")
+  (#set! symbol.icon "book")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
 
 ((section_body
@@ -17,6 +19,7 @@
     (chapter
       title: (inline) @name) @definition.heading))
   (#match? @name "\\S")
+  (#set! symbol.icon "book")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
 
 ((layout_group
@@ -24,6 +27,7 @@
     (header
       title: (inline) @name))) @definition.heading
   (#match? @name "\\S")
+  (#set! symbol.icon "bookmark")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
 
 ((document
@@ -31,6 +35,7 @@
     (header
       title: (inline) @name) @definition.heading))
   (#match? @name "\\S")
+  (#set! symbol.icon "bookmark")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
 
 ((section_body
@@ -38,6 +43,7 @@
     (header
       title: (inline) @name) @definition.heading))
   (#match? @name "\\S")
+  (#set! symbol.icon "bookmark")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
 
 ((layout_block
@@ -45,4 +51,5 @@
     (header
       title: (inline) @name) @definition.heading))
   (#match? @name "\\S")
+  (#set! symbol.icon "bookmark")
   (#set! symbol.strip "(^\\s*|\\s*$)"))
