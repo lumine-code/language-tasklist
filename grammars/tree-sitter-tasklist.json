@@ -1,0 +1,16 @@
+{
+  "name": "Tasklist",
+  "scopeName": "text.tasklist",
+  "type": "tree-sitter",
+  "parser": "tree-sitter-tasklist",
+  "injectionRegex": "^tasklist$",
+  "fileTypes": ["tasklist", "todo"],
+  "treeSitter": {
+    "parserSource": "github:lumine-code/tree-sitter-tasklist#1abf53102fd2b7a8d69a328193a812e8217b25bd",
+    "wasmBuildTool": "tree-sitter-cli#v0.26.13",
+    "grammar": "tree-sitter-tasklist/tree-sitter-tasklist.wasm",
+    "highlightsQuery": "tree-sitter-tasklist/highlights.scm",
+    "foldsQuery": "tree-sitter-tasklist/folds.scm",
+    "indentsQuery": "tree-sitter-tasklist/indents.scm"
+  }
+}

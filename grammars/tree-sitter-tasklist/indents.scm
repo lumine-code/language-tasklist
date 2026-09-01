@@ -1,0 +1,2 @@
+((line) @indent
+  (#match? @indent "^.+: *$"))

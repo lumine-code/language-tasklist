@@ -6,10 +6,12 @@ Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols
 
 ## Features
 
-- **Grammars**: provides TextMate grammars maintained here.
+- **Grammars**: provides Tree-sitter grammars.
 - **Unicode ticks**: multiple task states using Unicode symbols.
-- **Chapters & headers**: support for `#` chapters and `:` headers.
+- **Chapters and headers**: support for `#` chapters and `:` headers.
 - **Text formatting**: support for `~text~`, `*text*`, `_text_`, `$text$` and `` `text` ``.
+- **Folding**: folds visually indented groups without changing task semantics.
+- **Annotations**: highlights hyperlinks and TODO annotations in active text.
 
 ## Installation
 
@@ -31,20 +33,10 @@ A task is a single line consisting of a tick and text. Unicode characters repres
 - Non-tick lines ending with `:` are headers.
 - Two space indentation is recommended.
 
-## Customization
+## Services
 
-The style can be adjusted in the user's `styles.css` file, e.g. add line-through to done and fail tasks:
-
-```css
-.syntax--tasklist {
-  &.syntax--done,
-  &.syntax--fail {
-    &.syntax--text {
-      text-decoration: line-through;
-    }
-  }
-}
-```
+- `hyperlink.injection`: consumed to highlight hyperlinks in active tasklist text.
+- `todo.injection`: consumed to highlight TODO annotations in active tasklist text.
 
 ## Contributing
 
