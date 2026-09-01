@@ -6,7 +6,7 @@
   "injectionRegex": "^tasklist$",
   "fileTypes": ["tasklist", "todo"],
   "treeSitter": {
-    "parserSource": "github:lumine-code/tree-sitter-tasklist#1abf53102fd2b7a8d69a328193a812e8217b25bd",
+    "parserSource": "github:lumine-code/tree-sitter-tasklist#82ddc25b001e0bda15199eb645e430c50b4d2c17",
     "wasmBuildTool": "tree-sitter-cli#v0.26.13",
     "grammar": "tree-sitter-tasklist/tree-sitter-tasklist.wasm",
     "highlightsQuery": "tree-sitter-tasklist/highlights.scm",

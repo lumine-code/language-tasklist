@@ -190,42 +190,78 @@ describe("language-tasklist", () => {
     }
   });
 
-  it("folds visual indentation without changing line semantics", async () => {
+  it("folds chapters and nested headers without folding task or prose groups", async () => {
     await setUp(
-      "Parent\n  child\n    grandchild\nSibling\n\tTabbed child\nAfter\nBlank group\n\n  child after blank\nEnd\nTrailing group\n  child\n\n\nFinal\n",
+      "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\nPlain\n  indented\n☐ task\n  ☐ nested\n",
     );
 
     expect(languageMode.tree.rootNode.hasError).toBe(false);
-    for (const row of [0, 1, 3, 6, 10]) expect(editor.isFoldableAtBufferRow(row)).toBe(true);
-    for (const row of [2, 4, 5, 7, 8, 9, 11, 12, 13, 14]) {
+    for (const row of [0, 1, 2, 6, 8]) expect(editor.isFoldableAtBufferRow(row)).toBe(true);
+    for (const row of [3, 4, 5, 7, 9, 10, 11, 12]) {
       expect(editor.isFoldableAtBufferRow(row)).toBe(false);
     }
 
     editor.foldBufferRow(0);
-    expect(foldedBufferRanges()).toEqual([[0, 2]]);
+    expect(foldedBufferRanges()).toEqual([[0, 7]]);
     editor.unfoldAll();
-    editor.foldBufferRow(3);
-    expect(foldedBufferRanges()).toEqual([[3, 4]]);
+    editor.foldBufferRow(1);
+    expect(foldedBufferRanges()).toEqual([[1, 5]]);
+    editor.unfoldAll();
+    editor.foldBufferRow(2);
+    expect(foldedBufferRanges()).toEqual([[2, 4]]);
     editor.unfoldAll();
     editor.foldBufferRow(6);
-    expect(foldedBufferRanges()).toEqual([[6, 8]]);
+    expect(foldedBufferRanges()).toEqual([[6, 7]]);
     editor.unfoldAll();
-    editor.foldBufferRow(10);
-    expect(foldedBufferRanges()).toEqual([[10, 11]]);
+    editor.foldBufferRow(8);
+    expect(foldedBufferRanges()).toEqual([[8, 12]]);
   });
 
-  it("exposes named chapters and headers to symbol consumers", async () => {
-    await setUp("# Chapter name\nHeader name:\n☐ task name\n• note name\n :\n###   \n");
+  it("exposes nested chapter and header symbols while excluding tasks", async () => {
+    await setUp(
+      "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\n☐ task outside\n :\n###   \n",
+    );
     const layer = languageMode.rootLanguageLayer;
     const captures = layer.queries.tagsQuery.captures(layer.tree.rootNode);
+    const names = captures.filter((capture) => capture.name === "name");
+    const entries = captures
+      .filter((capture) => capture.name === "definition.heading")
+      .map((capture) => ({
+        name: names.find(
+          (name) =>
+            name.node.startIndex >= capture.node.startIndex &&
+            name.node.endIndex <= capture.node.endIndex,
+        ).node.text,
+        start: capture.node.startIndex,
+        end: capture.node.endIndex,
+        children: [],
+      }))
+      .sort((left, right) => left.start - right.start || right.end - left.end);
+    const roots = [];
+    const stack = [];
+    for (const entry of entries) {
+      while (stack.length > 0 && entry.start >= stack.at(-1).end) stack.pop();
+      (stack.at(-1)?.children ?? roots).push(entry);
+      stack.push(entry);
+    }
+    const simplify = (items) =>
+      items.map((item) => ({ name: item.name, children: simplify(item.children) }));
 
-    expect(
-      captures
-        .filter((capture) => capture.name === "definition.heading")
-        .map((capture) => capture.node.type),
-    ).toEqual(["chapter", "header"]);
-    expect(
-      captures.filter((capture) => capture.name === "name").map((capture) => capture.node.text),
-    ).toEqual(["Chapter name", "Header name"]);
+    expect(simplify(roots)).toEqual([
+      {
+        name: "Parent",
+        children: [
+          {
+            name: "Header",
+            children: [
+              { name: "Child", children: [] },
+              { name: "Sibling", children: [] },
+            ],
+          },
+          { name: "Subchapter", children: [] },
+        ],
+      },
+      { name: "Empty", children: [] },
+    ]);
   });
 });

@@ -1,7 +1,48 @@
-((chapter
-  title: (inline) @name) @definition.heading
-  (#match? @name "\\S"))
+((chapter_section
+  heading: (line
+    (chapter
+      title: (inline) @name))) @definition.heading
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
 
-((header
-  title: (inline) @name) @definition.heading
-  (#match? @name "\\S"))
+((document
+  (line
+    (chapter
+      title: (inline) @name) @definition.heading))
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
+
+((section_body
+  (line
+    (chapter
+      title: (inline) @name) @definition.heading))
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
+
+((layout_group
+  owner: (line
+    (header
+      title: (inline) @name))) @definition.heading
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
+
+((document
+  (line
+    (header
+      title: (inline) @name) @definition.heading))
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
+
+((section_body
+  (line
+    (header
+      title: (inline) @name) @definition.heading))
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
+
+((layout_block
+  (line
+    (header
+      title: (inline) @name) @definition.heading))
+  (#match? @name "\\S")
+  (#set! symbol.strip "(^\\s*|\\s*$)"))
