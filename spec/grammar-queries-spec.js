@@ -8,12 +8,9 @@ describe(`${PACKAGE_NAME} Tree-sitter queries`, () => {
 
   beforeEach(async () => {
     jasmine.useRealClock();
-    await lumine.packages.activatePackage(PACKAGE_NAME);
-
-    const packageDir = path.resolve(__dirname, "..");
-    grammars = lumine.grammars
-      .getGrammars({ includeTreeSitter: true })
-      .filter((grammar) => grammar.grammarFilePath?.startsWith(packageDir));
+    const pack = await lumine.packages.activatePackage(path.resolve(__dirname, ".."));
+    grammars = pack.grammars
+      .filter((grammar) => grammar.packageName === PACKAGE_NAME);
   });
 
   it(`registers all ${EXPECTED_GRAMMARS} Tree-sitter grammar config(s)`, () => {

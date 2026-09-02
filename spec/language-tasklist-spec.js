@@ -23,7 +23,6 @@ describe("language-tasklist", () => {
     editor.displayLayer.foldRangesSnapshot().map((range) => [range.start.row, range.end.row]);
 
   beforeEach(async () => {
-    lumine.config.set("editor.useTreeSitterParsers", true);
     await lumine.packages.activatePackage("language-tasklist");
     grammar = lumine.grammars.grammarForScopeName("text.tasklist");
   });

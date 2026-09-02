@@ -2,7 +2,6 @@ const path = require("path");
 
 describe("Tasklist sample fixtures", () => {
   beforeEach(async () => {
-    lumine.config.set("editor.useTreeSitterParsers", true);
     await lumine.packages.activatePackage("language-tasklist");
   });
 
