@@ -220,8 +220,8 @@ describe("language-tasklist", () => {
     await setUp(
       "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\n☐ task outside\n :\n###   \n",
     );
-    const layer = languageMode.rootLanguageLayer;
-    const captures = layer.queries.tagsQuery.captures(layer.tree.rootNode);
+    const groups = await languageMode.getQueryCaptureGroups("tagsQuery");
+    const captures = groups.flatMap((group) => group.captures);
     const names = captures.filter((capture) => capture.name === "name");
     const entries = captures
       .filter((capture) => capture.name === "definition.heading")
