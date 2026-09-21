@@ -1,7 +1,10 @@
+const path = require("path");
+
 describe("language-tasklist", () => {
   let editor;
   let languageMode;
   let grammar;
+  const packagePath = (name) => path.resolve(__dirname, "..", "..", name);
 
   const setUp = async (text) => {
     editor = await lumine.workspace.open();
@@ -124,8 +127,8 @@ describe("language-tasklist", () => {
   });
 
   it("keeps done, failed, and formatted contents opaque to nested highlighting", async () => {
-    await lumine.packages.activatePackage("language-hyperlink");
-    await lumine.packages.activatePackage("language-todo");
+    await lumine.packages.activatePackage(packagePath("language-hyperlink"));
+    await lumine.packages.activatePackage(packagePath("language-todo"));
     await setUp(
       "☐ active TODO https://example.com\n☐ *TODO https://formatted.example*\n✔ done TODO https://done.example *bold*\n✘ failed FIXME https://failed.example _italic_\n",
     );
