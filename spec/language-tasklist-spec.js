@@ -25,6 +25,9 @@ describe("language-tasklist", () => {
   const foldedBufferRanges = () =>
     editor.displayLayer.foldRangesSnapshot().map((range) => [range.start.row, range.end.row]);
 
+  const rootNode = () =>
+    editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+
   beforeEach(async () => {
     await lumine.packages.activatePackage("language-tasklist");
     grammar = lumine.grammars.grammarForScopeName("text.tasklist");
@@ -46,8 +49,8 @@ describe("language-tasklist", () => {
       "# Chapter\n  ## indented text\nHeader:\n▷ urgent\n☐ pending\n✔ finished\n✘ rejected\n• note\nplain text\n",
     );
 
-    const root = languageMode.tree.rootNode;
-    expect(root.hasError).toBe(false);
+    const root = rootNode();
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
     expect(root.descendantsOfType("chapter").length).toBe(1);
     expect(root.descendantsOfType("header").length).toBe(1);
     expect(root.descendantsOfType("task").length).toBe(4);
@@ -58,7 +61,7 @@ describe("language-tasklist", () => {
   it("preserves line precedence and ASCII-space boundaries", async () => {
     await setUp("☐ task:\n• note:\n# Chapter:\n :\n###   \nHeader:\t\n");
 
-    const lines = languageMode.tree.rootNode.descendantsOfType("line");
+    const lines = rootNode().descendantsOfType("line");
     expect(lines.map((line) => line.namedChild(0).type)).toEqual([
       "task",
       "note",
@@ -67,7 +70,7 @@ describe("language-tasklist", () => {
       "chapter",
       "text_line",
     ]);
-    expect(languageMode.tree.rootNode.hasError).toBe(false);
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
   });
 
   it("applies stable scopes to line markers and contents", async () => {
@@ -197,7 +200,7 @@ describe("language-tasklist", () => {
       "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\nPlain\n  indented\n☐ task\n  ☐ nested\n",
     );
 
-    expect(languageMode.tree.rootNode.hasError).toBe(false);
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
     for (const row of [0, 1, 2, 6, 8]) expect(editor.isFoldableAtBufferRow(row)).toBe(true);
     for (const row of [3, 4, 5, 7, 9, 10, 11, 12]) {
       expect(editor.isFoldableAtBufferRow(row)).toBe(false);
@@ -223,7 +226,7 @@ describe("language-tasklist", () => {
     await setUp(
       "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\n☐ task outside\n :\n###   \n",
     );
-    const groups = await languageMode.getQueryCaptureGroups("tagsQuery");
+    const groups = await editor.getGrammarQueryCaptureGroups("tagsQuery");
     const captures = groups.flatMap((group) => group.captures);
     const names = captures.filter((capture) => capture.name === "name");
     const entries = captures
