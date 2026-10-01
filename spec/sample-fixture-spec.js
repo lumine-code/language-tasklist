@@ -11,7 +11,7 @@ describe("Tasklist sample fixtures", () => {
     await languageMode.ready;
 
     expect(editor.getGrammar().scopeName).toBe("text.tasklist");
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.languageMode.tree.rootNode.hasError).toBe(false);
     const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
     expect(root.descendantsOfType("task").length).toBeGreaterThan(0);
     expect(root.descendantsOfType("bold").length).toBeGreaterThan(0);

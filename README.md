@@ -34,11 +34,6 @@ A task is a single line consisting of a tick and text. Unicode characters repres
 - Non-tick lines ending with `:` are headers.
 - Two space indentation is recommended.
 
-## Services
-
-- `hyperlink.injection`: consumed to highlight hyperlinks in active tasklist text.
-- `todo.injection`: consumed to highlight TODO annotations in active tasklist text.
-
 ## Contributing
 
 Got ideas to make this package better, found a bug, or want to help add new features? Just drop your thoughts on GitHub. Any feedback is welcome!

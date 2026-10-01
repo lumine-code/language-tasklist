@@ -50,7 +50,7 @@ describe("language-tasklist", () => {
     );
 
     const root = rootNode();
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.languageMode.tree.rootNode.hasError).toBe(false);
     expect(root.descendantsOfType("chapter").length).toBe(1);
     expect(root.descendantsOfType("header").length).toBe(1);
     expect(root.descendantsOfType("task").length).toBe(4);
@@ -70,7 +70,7 @@ describe("language-tasklist", () => {
       "chapter",
       "text_line",
     ]);
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.languageMode.tree.rootNode.hasError).toBe(false);
   });
 
   it("applies stable scopes to line markers and contents", async () => {
@@ -200,7 +200,7 @@ describe("language-tasklist", () => {
       "# Parent\nHeader:\n  Child:\n    ☐ task\n      ☐ nested task\n  Sibling:\n## Subchapter\ntext\n# Empty\nPlain\n  indented\n☐ task\n  ☐ nested\n",
     );
 
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.languageMode.tree.rootNode.hasError).toBe(false);
     for (const row of [0, 1, 2, 6, 8]) expect(editor.isFoldableAtBufferRow(row)).toBe(true);
     for (const row of [3, 4, 5, 7, 9, 10, 11, 12]) {
       expect(editor.isFoldableAtBufferRow(row)).toBe(false);

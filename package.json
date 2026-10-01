@@ -2,7 +2,6 @@
   "name": "language-tasklist",
   "author": "lumine-code",
   "description": "Syntax highlighting for tasklist files.",
-  "main": "lib/main",
   "repository": "https://github.com/lumine-code/language-tasklist",
   "bugs": {
     "url": "https://github.com/lumine-code/language-tasklist/issues"
@@ -18,7 +17,6 @@
   "files": [
     "assets",
     "grammars",
-    "lib",
     "settings",
     "spec",
     "styles"
@@ -35,18 +33,6 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
-  },
-  "consumedServices": {
-    "hyperlink.injection": {
-      "versions": {
-        "^1.0.0": "consumeHyperlinkInjection"
-      }
-    },
-    "todo.injection": {
-      "versions": {
-        "^1.0.0": "consumeTodoInjection"
-      }
-    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

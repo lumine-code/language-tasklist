@@ -12,6 +12,7 @@
     "highlightsQuery": "tasklist-highlights.scm",
     "foldsQuery": "tasklist-folds.scm",
     "indentsQuery": "tasklist-indents.scm",
-    "tagsQuery": "tasklist-tags.scm"
+    "tagsQuery": "tasklist-tags.scm",
+    "injectionsQuery": "tasklist-injections.scm"
   }
 }
