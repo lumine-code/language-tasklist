@@ -44,6 +44,55 @@ describe("language-tasklist", () => {
     expect(lumine.grammars.selectGrammar("notes.todo", "")).toBe(grammar);
   });
 
+  it("accepts empty documents, leading blank lines and NUL task content", async () => {
+    for (const source of ["", "\n", " \t\n\n☐ task\n", "☐ a\0b\n"]) {
+      await setUp(source);
+      expect(languageMode.tree.rootNode.hasError).toBe(false);
+      if (source.includes("\0")) {
+        expect(languageMode.tree.rootNode.descendantsOfType("inline")[0].text).toBe("a\0b");
+      }
+    }
+  });
+
+  it("keeps whitespace before a header colon outside its title scope", async () => {
+    await setUp("Header a :\n");
+    const header = rootNode().descendantsOfType("header")[0];
+    expect(header.childForFieldName("title").text).toBe("Header a");
+    expect(header.childForFieldName("colon").text).toBe(":");
+    expect(scopesAt("Header a")).toContain("text.header.tasklist");
+    expect(scopesAt(" :")).not.toContain("text.header.tasklist");
+    expect(scopesAt(":")).toContain("punctuation.definition.symbol.header.tasklist");
+  });
+
+  it("updates formatting after adding and removing a previously missing closer", async () => {
+    await setUp("*a *b\nAfter\n");
+    expect(rootNode().descendantsOfType("bold").length).toBe(0);
+    editor.setTextInBufferRange(
+      [
+        [0, 5],
+        [0, 5],
+      ],
+      "*",
+    );
+    await languageMode.atTransactionEnd();
+    expect(
+      rootNode()
+        .descendantsOfType("bold")
+        .map((node) => node.text),
+    ).toEqual(["*a *b*"]);
+    expect(scopesAt("*a")).toContain("markup.bold.format.tasklist");
+    editor.setTextInBufferRange(
+      [
+        [0, 5],
+        [0, 6],
+      ],
+      "",
+    );
+    await languageMode.atTransactionEnd();
+    expect(rootNode().descendantsOfType("bold").length).toBe(0);
+    expect(scopesAt("*a")).not.toContain("markup.bold.format.tasklist");
+  });
+
   it("parses every line form without assigning hierarchy to chapters", async () => {
     await setUp(
       "# Chapter\n  ## indented text\nHeader:\n▷ urgent\n☐ pending\n✔ finished\n✘ rejected\n• note\nplain text\n",
