@@ -64,6 +64,98 @@ describe("language-tasklist", () => {
     expect(scopesAt(":")).toContain("punctuation.definition.symbol.header.tasklist");
   });
 
+  it("keeps nonfinal title colons separate from the final header delimiter", async () => {
+    await setUp("");
+    for (const source of ["a::", "a: :"]) {
+      editor.setText(`${source}\n  Child::\n    ☐ nested\nSibling:\n`);
+      await languageMode.atTransactionEnd();
+      const root = rootNode();
+      expect(root.hasError).toBe(false);
+      const header = root.descendantsOfType("header")[0];
+      expect(header.childForFieldName("title").text).toBe("a:");
+      expect(header.childForFieldName("colon").text).toBe(":");
+      expect(header.childForFieldName("colon").startPosition.column).toBe(source.lastIndexOf(":"));
+      expect(scopesAt("a:", 1)).toContain("text.header.tasklist");
+      expect(scopesAt("a:", 1)).not.toContain("punctuation.definition.symbol.header.tasklist");
+      const finalScope = editor
+        .scopeDescriptorForBufferPosition([0, source.length - 1])
+        .getScopesArray();
+      expect(finalScope).toContain("punctuation.definition.symbol.header.tasklist");
+      expect(finalScope).not.toContain("text.header.tasklist");
+      if (source === "a: :") {
+        expect(editor.scopeDescriptorForBufferPosition([0, 2]).getScopesArray()).not.toContain(
+          "text.header.tasklist",
+        );
+      }
+      const parent = root.namedChild(0);
+      expect(parent.type).toBe("layout_group");
+      const child = parent.childForFieldName("body").namedChild(0);
+      expect(child.type).toBe("layout_group");
+      expect(
+        child.childForFieldName("owner").descendantsOfType("header")[0].childForFieldName("title")
+          .text,
+      ).toBe("Child:");
+      expect(child.childForFieldName("body").descendantsOfType("task").length).toBe(1);
+      expect(editor.isFoldableAtBufferRow(0)).toBe(true);
+      expect(editor.isFoldableAtBufferRow(1)).toBe(true);
+      expect(editor.isFoldableAtBufferRow(2)).toBe(false);
+      editor.unfoldAll();
+      editor.foldBufferRow(0);
+      expect(foldedBufferRanges()).toEqual([[0, 2]]);
+      editor.unfoldAll();
+      editor.foldBufferRow(1);
+      expect(foldedBufferRanges()).toEqual([[1, 2]]);
+      editor.unfoldAll();
+    }
+  });
+
+  it("updates title colon scopes and header folding after incremental colon edits", async () => {
+    await setUp("a::\n  Child::\n    ☐ nested\nSibling:\n");
+    const replace = async (start, end, text) => {
+      editor.setTextInBufferRange(
+        [
+          [0, start],
+          [0, end],
+        ],
+        text,
+      );
+      await languageMode.atGrammarSettlement();
+      expect(rootNode().hasError).toBe(false);
+      expect(rootNode().descendantsOfType("task").length).toBe(1);
+      expect(editor.isFoldableAtBufferRow(1)).toBe(true);
+    };
+    await replace(2, 2, " ");
+    let header = rootNode().descendantsOfType("header")[0];
+    expect(header.childForFieldName("title").text).toBe("a:");
+    expect(header.childForFieldName("colon").startPosition.column).toBe(3);
+    expect(editor.scopeDescriptorForBufferPosition([0, 2]).getScopesArray()).not.toContain(
+      "text.header.tasklist",
+    );
+    expect(editor.isFoldableAtBufferRow(0)).toBe(true);
+
+    await replace(2, 3, "");
+    await replace(2, 3, "");
+    header = rootNode().descendantsOfType("header")[0];
+    expect(header.childForFieldName("title").text).toBe("a");
+    expect(header.childForFieldName("colon").startPosition.column).toBe(1);
+    await replace(1, 2, "");
+    expect(rootNode().namedChild(0).childForFieldName("owner").descendantsOfType("header")).toEqual(
+      [],
+    );
+    expect(scopesAt("a")).not.toContain("text.header.tasklist");
+    expect(editor.isFoldableAtBufferRow(0)).toBe(false);
+
+    await replace(1, 1, ": :");
+    header = rootNode().descendantsOfType("header")[0];
+    expect(header.childForFieldName("title").text).toBe("a:");
+    expect(header.childForFieldName("colon").startPosition.column).toBe(3);
+    expect(scopesAt("a:", 1)).toContain("text.header.tasklist");
+    expect(editor.scopeDescriptorForBufferPosition([0, 3]).getScopesArray()).toContain(
+      "punctuation.definition.symbol.header.tasklist",
+    );
+    expect(editor.isFoldableAtBufferRow(0)).toBe(true);
+  });
+
   it("updates formatting after adding and removing a previously missing closer", async () => {
     await setUp("*a *b\nAfter\n");
     expect(rootNode().descendantsOfType("bold").length).toBe(0);
