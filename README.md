@@ -14,6 +14,8 @@ Provides a grammar for `*.todo` and `*.tasklist` files with Unicode tick symbols
 - **Symbols**: nests chapters by level and headers by indentation in symbol navigation.
 - **Annotations**: highlights hyperlinks and TODO annotations in active text.
 
+![Tasklist syntax highlighting at the default editor font size.](.github/demo.png)
+
 ## Installation
 
 To install `language-tasklist` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-tasklist`.

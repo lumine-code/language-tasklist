@@ -1,0 +1,16 @@
+{
+  "title": "language-tasklist",
+  "description": "Tasklist syntax highlighting in the editor.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "fdd133885f51dba7464739d1ef062f56e263dad9",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Tasklist syntax highlighting at the default editor font size.",
+      "width": 1100,
+      "height": 648
+    }
+  ]
+}
