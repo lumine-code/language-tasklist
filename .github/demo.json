@@ -1,16 +1,61 @@
 {
   "title": "language-tasklist",
-  "description": "Tasklist syntax highlighting in the editor.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "fdd133885f51dba7464739d1ef062f56e263dad9",
+  "description": "Tasklist syntax highlighting at the default editor font size.",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "34b9a655f3bfeafa0c0579f4acbca26f382f925d",
+  "themeSourceRevision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
   "mode": "normal",
   "fontSettings": "default",
+  "scenario": "demo.js",
+  "recipeHash": "f7d550a878b017e6ff27a5044371b298de787fe7e90f1367f5243d09a36ae04f",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 648 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "0362a9fac7d6e153a768c0381800d6f3eb06647a",
+      "dirty": true,
+      "workingTreeHash": "0fa935626a1db13861a0b78ef5c3d890e0a6bff80b25da2fac6e9889910defe0"
+    },
+    "package": {
+      "revision": "34b9a655f3bfeafa0c0579f4acbca26f382f925d",
+      "dirty": true,
+      "workingTreeHash": "6802ab17e7f581f9f737bf57ece8c060a55db6c6f952181dc858851b0688554b"
+    },
+    "language-tasklist": {
+      "revision": "34b9a655f3bfeafa0c0579f4acbca26f382f925d",
+      "dirty": true,
+      "workingTreeHash": "6802ab17e7f581f9f737bf57ece8c060a55db6c6f952181dc858851b0688554b"
+    },
+    "one-theme": {
+      "revision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
+      "dirty": true,
+      "workingTreeHash": "50ec2f83a6347dd8113870992ec4eb2be4014f3d9e12213c2f51b543f1eca793"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "example.tasklist",
+      "sha256": "d62969441685b580a450559be999d07e3fe8f6c72491216fae62fec90fddbdf4"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Tasklist syntax highlighting at the default editor font size.",
       "width": 1100,
-      "height": 648
+      "height": 648,
+      "sha256": "d8e3818d50ad499f7a3bf121625a413523d01dce565309d0e30f4e7419e99de1"
     }
   ]
 }
