@@ -1,0 +1,24 @@
+# Sample tasklist
+
+A heading is `#` and a section header is a line ending in a colon. Task
+markers are ▷ high, ☐ todo, ✔ done, ✘ dropped, and • a plain bullet.
+
+Release 1.0:
+
+  ▷ Cut the release branch
+  ☐ Update the changelog
+  ☐ Rebuild the *grammar* wasm files
+  ✔ Repin every language package
+  ✘ Publish to npm — decided against
+
+## Editor
+
+  ☐ Fix `runGrammarTests` on ~CRLF~ fixtures
+  ☐ Measure the _installer_ delta after the grammar waves
+  ✔ Drop the local directory names from every repository
+  • Not a task, just a note
+
+Docs:
+
+  ☐ Write the $O(n log n)$ note for the matcher
+  ✔ Describe the two-place pin
