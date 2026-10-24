@@ -7,7 +7,7 @@
   "fileTypes": ["tasklist", "todo"],
   "treeSitter": {
     "parserSource": "github:lumine-code/tree-sitter-tasklist#1e66e26a5a5cba7cddb228f37d4914c0a3067551",
-    "wasmBuildTool": "tree-sitter-cli#v0.27.0",
+    "wasmBuildTool": "tree-sitter-cli#v0.27.1",
     "grammar": "tasklist.wasm",
     "highlightsQuery": "tasklist-highlights.scm",
     "foldsQuery": "tasklist-folds.scm",
