@@ -301,17 +301,10 @@ describe("language-tasklist", () => {
     expect(scopesAt("_italic_")).not.toContain("markup.italic.format.tasklist");
   });
 
-  it("indents after every nonempty line whose last non-whitespace character is a colon", async () => {
+  it("indents only after parsed header lines", async () => {
     await setUp("");
 
-    for (const text of [
-      "Header:",
-      "Header:   ",
-      "☐ task:",
-      "# Chapter:",
-      "• note:",
-      "plain text:",
-    ]) {
+    for (const text of ["Header:", "Header:   ", "plain text:"]) {
       editor.setText(text);
       await languageMode.atTransactionEnd();
       editor.setCursorBufferPosition([0, Infinity]);
@@ -323,7 +316,15 @@ describe("language-tasklist", () => {
       expect(editor.lineTextForBufferRow(1)).toBe("  ");
     }
 
-    for (const text of [":", "☐ no colon", "Header:\t", "☐ task:\t"]) {
+    for (const text of [
+      ":",
+      "☐ no colon",
+      "☐ task:",
+      "# Chapter:",
+      "• note:",
+      "Header:\t",
+      "☐ task:\t",
+    ]) {
       editor.setText(text);
       await languageMode.atTransactionEnd();
       editor.setCursorBufferPosition([0, Infinity]);
